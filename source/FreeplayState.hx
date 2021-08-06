@@ -33,7 +33,7 @@ class FreeplayState extends MusicBeatState
 
 	var selector:FlxText;
 	public static var curSelected:Int = 0;
-	public static var curDifficulty:Int = 1;
+	public static var curDifficulty:Int = 2;
 
 	var scoreText:FlxText;
 	var comboText:FlxText;
@@ -328,11 +328,11 @@ class FreeplayState extends MusicBeatState
 			}
 			if (gamepad.justPressed.DPAD_LEFT)
 			{
-				changeDiff(-1);
+				changeDiff(0);
 			}
 			if (gamepad.justPressed.DPAD_RIGHT)
 			{
-				changeDiff(1);
+				changeDiff(0);
 			}
 
 			//if (gamepad.justPressed.X && !openedPreview)
@@ -352,9 +352,9 @@ class FreeplayState extends MusicBeatState
 			//openSubState(new DiffOverview());
 
 		if (FlxG.keys.justPressed.LEFT)
-			changeDiff(-1);
+			changeDiff(0);
 		if (FlxG.keys.justPressed.RIGHT)
-			changeDiff(1);
+			changeDiff(0);
 
 		if (controls.BACK)
 		{

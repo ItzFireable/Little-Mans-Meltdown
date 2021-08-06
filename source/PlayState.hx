@@ -132,9 +132,11 @@ class PlayState extends MusicBeatState
 	public static var gf:Character;
 	public static var boyfriend:Boyfriend;
 	public static var tankman:Character;
+	public static var sans:Character;
 	public static var little:Character;
 	public static var geno:Character;
 	public static var impostor:Boyfriend;
+	public static var pizzaman:Character;
 
 	public var notes:FlxTypedGroup<Note>;
 
@@ -487,41 +489,7 @@ class PlayState extends MusicBeatState
 		// defaults if no stage was found in chart
 		var stageCheck:String = 'stage';
 
-		if (SONG.stage == null)
-		{
-			switch (storyWeek)
-			{
-				case 2:
-					stageCheck = 'halloween';
-				case 3:
-					stageCheck = 'philly';
-				case 4:
-					stageCheck = 'limo';
-				case 5:
-					if (songLowercase == 'winter-horrorland')
-					{
-						stageCheck = 'mallEvil';
-					}
-					else
-					{
-						stageCheck = 'mall';
-					}
-				case 6:
-					if (songLowercase == 'thorns')
-					{
-						stageCheck = 'schoolEvil';
-					}
-					else
-					{
-						stageCheck = 'school';
-					}
-					// i should check if its stage (but this is when none is found in chart anyway)
-			}
-		}
-		else
-		{
-			stageCheck = SONG.stage;
-		}
+		stageCheck = SONG.stage;
 
 		if (!PlayStateChangeables.Optimize)
 		{
@@ -544,6 +512,28 @@ class PlayState extends MusicBeatState
 					add(glitchSprite);*/
 					
 					var ground:FlxSprite = new FlxSprite(-537, -250).loadGraphic(Paths.image('bob/happyRon_ground'));
+					ground.updateHitbox();
+					ground.active = false;
+					ground.antialiasing = true;
+					add(ground);
+				}
+				case 'expurgation':
+				{
+					defaultCamZoom = 0.9;
+					curStage = 'ron';
+					var bg:FlxSprite = new FlxSprite(-100,10).loadGraphic(Paths.image('bob/expurgationRon_sky'));
+					bg.updateHitbox();
+					bg.scale.x = 1.2;
+					bg.scale.y = 1.2;
+					bg.active = false;
+					bg.antialiasing = true;
+					bg.scrollFactor.set(0.1, 0.1);
+					add(bg);
+					/*var glitchEffect = new FlxGlitchEffect(8,10,0.4,FlxGlitchDirection.HORIZONTAL);
+					var glitchSprite = new FlxEffectSprite(bg, [glitchEffect]);
+					add(glitchSprite);*/
+					
+					var ground:FlxSprite = new FlxSprite(-537, -250).loadGraphic(Paths.image('bob/expurgationRon_ground'));
 					ground.updateHitbox();
 					ground.active = false;
 					ground.antialiasing = true;
@@ -602,8 +592,10 @@ class PlayState extends MusicBeatState
 
 		dad = new Character(100, 100, SONG.player2);
 		little = new Character(224, 744, "little-man");
+		sans = new Character(224, 744, "little-man-sans");
 		tankman = new Character(73, 368, "tankman");
 		geno = new Character(93, 277, "geno");
+		pizzaman = new Character(224, 744, "pizza");
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
@@ -640,6 +632,16 @@ class PlayState extends MusicBeatState
 				dad.y += 360;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 			case 'little-man':
+				camPos.x -= 124;
+				camPos.y += 644;
+				dad.x += 124;
+				dad.y += 644;
+			case 'pizza':
+				camPos.x -= 124;
+				camPos.y += 644;
+				dad.x += 124;
+				dad.y += 644;
+			case 'little-man-sans':
 				camPos.x -= 124;
 				camPos.y += 644;
 				dad.x += 124;
@@ -4056,36 +4058,57 @@ class PlayState extends MusicBeatState
 		{
 			resyncVocals();
 		}
-
-		switch(curStep)
+		switch(SONG.song.toLowerCase())
 		{
-			case 1252:
-				replace(dad,tankman);
-				dad = tankman;
-				iconP2.changeIcon("tankman");
-			case 1407:
-				replace(dad,little);
-				dad = little;
-				iconP2.changeIcon("little-man");
-			case 1791:
-				replace(dad,geno);
-				dad = geno;
-				iconP2.changeIcon("geno");
-			case 1919:
-				replace(dad,little);
-				dad = little;
-				iconP2.changeIcon("little-man");
-			case 2090:
-				var thx:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('littleman/spotifyad'));
-				thx.updateHitbox();
-				thx.scrollFactor.set(0, 0);
-				thx.screenCenter(XY);
-				thx.antialiasing = true;
-				FlxG.camera.fade(FlxColor.BLACK, 1, false, function()
+			case 'little-meltdown':
+				switch(curStep)
 				{
-					add(thx);
-					FlxG.camera.fade(FlxColor.BLACK, 1, true);
-				}, true);
+					case 383:
+						replace(dad,sans);
+						dad = sans;
+					case 447:
+						replace(dad,little);
+						dad = little;
+					case 1252:
+						replace(dad,tankman);
+						dad = tankman;
+						iconP2.changeIcon("tankman");
+					case 1407:
+						replace(dad,little);
+						dad = little;
+						iconP2.changeIcon("little-man");
+					case 1791:
+						replace(dad,geno);
+						dad = geno;
+						iconP2.changeIcon("geno");
+					case 1919:
+						replace(dad,little);
+						dad = little;
+						iconP2.changeIcon("little-man");
+					case 2090:
+						var thx:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('littleman/spotifyad'));
+						thx.updateHitbox();
+						thx.scrollFactor.set(0, 0);
+						thx.screenCenter(XY);
+						thx.antialiasing = true;
+						FlxG.camera.fade(FlxColor.BLACK, 1, false, function()
+						{
+							add(thx);
+							FlxG.camera.fade(FlxColor.BLACK, 1, true);
+						}, true);
+				}
+			case 'expurgation':
+				switch(curStep)
+				{
+					case 2127:
+						replace(dad,pizzaman);
+						dad = pizzaman;
+						iconP2.changeIcon("pizza");
+					case 2143:
+						replace(dad,little);
+						dad = little;
+						iconP2.changeIcon("little-man");
+				}
 		}
 
 		#if windows

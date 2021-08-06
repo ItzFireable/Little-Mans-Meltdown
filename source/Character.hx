@@ -396,6 +396,31 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -8, 0);
 				addOffset("singRIGHT", 0, 2);
 				addOffset("singDOWN", 0, -10);
+			case 'little-man-sans':
+				tex = Paths.getSparrowAtlas('characters/Sans_Guy');
+				frames = tex;
+				animation.addByPrefix('idle', "idle", 24);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", -10, 8);
+				addOffset("singLEFT", -8, 0);
+				addOffset("singRIGHT", 0, 2);
+				addOffset("singDOWN", 0, -10);
+
+			case 'pizza':
+				tex = Paths.getSparrowAtlas('characters/PizzaMan');
+				frames = tex;
+				animation.addByPrefix('idle', "PizzasHere", 29);
+				animation.addByPrefix('fall', "PizzasHere", 29);
+				animation.addByPrefix('singUP', 'Up', 29, false);
+				animation.addByPrefix('singDOWN', 'Down', 29, false);
+				animation.addByPrefix('singLEFT', 'Left', 29, false);
+				animation.addByPrefix('singRIGHT', 'Right', 29, false);
+				addOffset('idle');
 
 			case 'tankman':
 				tex = Paths.getSparrowAtlas('characters/Tankman');
